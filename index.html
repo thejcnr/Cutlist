@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cut Optimizer">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#eceff3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f151b" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACTUlEQVR42u3bwanCQBSG0fRhG9ZhFYL9WIRFWIhluHHnyoAgLiIkTLxk7j3wLcSNvsdZOD+ZYXe4SJMN/gWCQ3AIDsEhOASH4BAcgkNwSHAIDsEhOASH4BAcgkNwCA4JDsEhOASH4BAcgkNwCA7BIcEhOBSM4/54pm8Lf+znO5zOt7H98frd+81f78NRCMciGXAUwrFUxvgajoo45siAoyKOmTLgKIdjvgw4auFYJAOOckfZRWcWOOwcdg447Bxw2DngsHPAYeeAw84Bh50DDjsHHHYOOOwccNg57Bxw2DngsHPAYeeAw84Bh51DLjUJDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3CoKI7KDwD/43Nb7qe4t1ILR7sMOHLiWEUGHAlxrCWj+i37xDjaZcCRE8cqMuDIfFpp/2UKR2Ycjb8/4LBz2DnsHHYOOOwccNg54LBzwGHngMPOAYedAw47Bxx2DjjsHHYOO4edw85h54DDzgGHnQMOO4dcahIcEhyCQ3AIDsEhOASH4BAcgkOCQ3AIDsEhOASH4FBRHFt4wHhrDx7HPFPu3kpmHDEy4OgPR5iM6vdWusMRKQOOnnAEy4CjGxzxMuDoDEfwmQWObnDEn2bhsHPYOewcdg47h53DzmHngMPOAYedAw47Bxx2DjjsHHDYOeCwc9g57Bx2DjuHncPOYeeAw84Bh51DLjUJDgkOwSE4BIfgEByCQ3AIDsEhwSE4BIfgEByCQ3AIDsEhOCQ4BIfgEByCQ3AIDsEhOASH4JCmegFUWfgQ+QQbkwAAAABJRU5ErkJggg==">
+<style>:root{color-scheme:light;padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Stock Cut Optimizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: inputs panel left, cut layouts right on wide screens; one column on phones with a docked summary bar. */
+:root {
+  --bg: #eceff3;
+  --surface: #fafbfc;
+  --surface-2: #e3e8ee;
+  --line: #c9d1da;
+  --fg: #141d27;
+  --muted: #556270;
+  --accent: #1b4ea6;
+  --accent-fg: #ffffff;
+  --accent-soft: #d9e4f6;
+  --warn: #a93a17;
+  --warn-soft: #f6ddd4;
+  --hatch: #b5bfca;
+  --p-s: 48%;
+  --p-l: 83%;
+  --p-text: #121c28;
+  --p-edge: rgba(20, 29, 39, 0.3);
+  --font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f151b;
+    --surface: #172029;
+    --surface-2: #1f2a35;
+    --line: #2d3a47;
+    --fg: #e6ecf1;
+    --muted: #95a3b0;
+    --accent: #8db3ff;
+    --accent-fg: #0b1220;
+    --accent-soft: #1b2b47;
+    --warn: #ff9a78;
+    --warn-soft: #3a211a;
+    --hatch: #3b4753;
+    --p-s: 38%;
+    --p-l: 30%;
+    --p-text: #e9eff5;
+    --p-edge: rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f151b;
+  --surface: #172029;
+  --surface-2: #1f2a35;
+  --line: #2d3a47;
+  --fg: #e6ecf1;
+  --muted: #95a3b0;
+  --accent: #8db3ff;
+  --accent-fg: #0b1220;
+  --accent-soft: #1b2b47;
+  --warn: #ff9a78;
+  --warn-soft: #3a211a;
+  --hatch: #3b4753;
+  --p-s: 38%;
+  --p-l: 30%;
+  --p-text: #e9eff5;
+  --p-edge: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.4 var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}
+.app {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  padding-block: 20px 110px;
+}
+.top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+  margin-block-end: 18px;
+}
+h1 {
+  margin: 0;
+  font: 700 32px/1 var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.lede { margin: 6px 0 0; color: var(--muted); font-size: 15px; max-width: 48ch; }
+h2 {
+  margin: 0;
+  font: 600 13px/1.2 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.layout { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 820px) {
+  .layout { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; gap: 28px; }
+  .dock { display: none !important; }
+  .app { padding-block-end: 32px; }
+  .tiles.t4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.group { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > span { font-size: 14px; font-weight: 600; }
+.hint { margin: 0; font-size: 13px; color: var(--muted); }
+
+input[type="text"] {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 500 17px var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+input[type="text"]::placeholder { color: var(--muted); opacity: 0.7; }
+input[type="text"]:disabled { opacity: 0.6; }
+input.bad { border-color: var(--warn); background: var(--warn-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg);
+  font: 500 13px var(--font-mono);
+}
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+.toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.toggle button {
+  min-height: 38px;
+  min-width: 52px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 14px var(--font-mono);
+}
+.toggle button + button { border-inline-start: 1px solid var(--line); }
+.toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
+
+.rows-head, .row { display: grid; grid-template-columns: minmax(0, 1fr) 84px 44px; gap: 8px; }
+.rows-head.srow, .row.srow { grid-template-columns: minmax(0, 1fr) 72px 44px 44px; }
+.rows-head { font-size: 13px; font-weight: 600; color: var(--muted); }
+.row { margin-block-end: 8px; }
+.del, .inf {
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  padding: 0;
+}
+.inf[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.btn {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--fg);
+  font: 600 15px var(--font-body);
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.btn.quiet { background: transparent; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.note {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.results { display: flex; flex-direction: column; gap: 14px; min-width: 0; scroll-margin-top: 12px; }
+.res-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.res-tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#res-body { display: flex; flex-direction: column; gap: 14px; }
+.empty { padding: 28px 16px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); text-align: center; }
+.warn { padding: 10px 12px; border-radius: 6px; background: var(--warn-soft); color: var(--warn); font-size: 14px; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 14px 12px; }
+.tiles.t4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tile { border-top: 2px solid var(--fg); padding-top: 8px; min-width: 0; }
+.tile .k { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.tile .v { font: 700 40px/1.05 var(--font-display); font-variant-numeric: tabular-nums; }
+.tile .v small { font-size: 18px; font-weight: 600; color: var(--muted); }
+.tile .s { font-size: 13px; color: var(--muted); }
+.status { font-size: 14px; color: var(--muted); }
+.status b { color: var(--fg); font-weight: 600; }
+
+.stock { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.stock.is-done { opacity: 0.5; }
+.stock-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.stock-h h3 { margin: 0; font: 600 22px/1.1 var(--font-display); letter-spacing: 0.01em; }
+.x { margin-inline-start: 8px; padding: 2px 7px; border-radius: 4px; background: var(--surface-2); font: 500 13px var(--font-mono); vertical-align: 2px; }
+.tag { margin-inline-start: 8px; padding: 2px 7px; border-radius: 4px; font: 600 12px var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 3px; }
+.tag.scrap { background: var(--surface-2); color: var(--muted); }
+.tag.buy { background: var(--accent-soft); color: var(--accent); }
+.done { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding-inline: 4px; font-size: 14px; font-weight: 600; }
+.done input { width: 22px; height: 22px; accent-color: var(--accent); }
+
+.bar { display: flex; height: 38px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--surface); }
+.cell { min-width: 0; overflow: hidden; display: flex; align-items: center; justify-content: flex-start; padding-inline: 4px; white-space: nowrap; font: 500 11px var(--font-mono); }
+.cell.piece { background: hsl(var(--h) var(--p-s) var(--p-l)); color: var(--p-text); box-shadow: inset -1px 0 0 var(--p-edge); }
+.cell.off { justify-content: center; padding: 0; background: repeating-linear-gradient(135deg, var(--hatch) 0 2px, transparent 2px 7px); }
+.cell.off em { font-style: normal; padding: 1px 4px; border-radius: 2px; background: var(--surface); color: var(--fg); }
+.cell.trim { padding: 0; background: repeating-linear-gradient(135deg, var(--hatch) 0 2px, transparent 2px 5px); opacity: 0.7; }
+.kerf { flex: 0 0 2px; background: var(--fg); opacity: 0.6; }
+
+.cuts { display: flex; flex-wrap: wrap; gap: 6px; }
+.cut { padding: 3px 8px; border-radius: 4px; font: 500 13px var(--font-mono); background: hsl(var(--h) var(--p-s) var(--p-l)); color: var(--p-text); font-variant-numeric: tabular-nums; }
+.cut.o { background: transparent; border: 1px dashed var(--muted); color: var(--muted); }
+
+.fallback { width: 100%; min-height: 120px; padding: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); font: 500 13px var(--font-mono); }
+
+.dock {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+.dock-t { font: 600 18px/1.15 var(--font-display); font-variant-numeric: tabular-nums; min-width: 0; }
+.dock-t span { display: block; font: 400 13px var(--font-body); color: var(--muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .stock { transition: opacity 0.15s; }
+}
+</style>
+
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div>
+      <h1>Stock Cut Optimizer</h1>
+      <p class="lede">Enter the pieces you need and the stock you have. Scrap gets used first, then only as much new stock as it takes.</p>
+    </div>
+    <div class="toggle" role="group" aria-label="Units">
+      <button type="button" id="u-in" aria-pressed="true">in</button>
+      <button type="button" id="u-mm" aria-pressed="false">mm</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="panel" aria-label="Inputs">
+      <div class="group">
+        <h2>Stock on hand</h2>
+        <div class="rows-head srow"><span>Length (<span class="unit-l">in</span>)</span><span>Qty</span><span></span><span></span></div>
+        <div id="stocks"></div>
+        <div class="actions">
+          <button type="button" class="btn primary" id="add-stock">Add stock length</button>
+        </div>
+        <p class="hint">For scrap, enter each length and how many you have. Tap <b>&infin;</b> on stock you can buy as much of as you want.</p>
+        <p class="hint">Quick add bought stock:</p>
+        <div class="chips" id="chips-stock" aria-label="Add common stock lengths"></div>
+      </div>
+
+      <div class="group">
+        <h2>Saw</h2>
+        <div class="grid2">
+          <label class="field" for="kerf"><span>Kerf (<span class="unit-l">in</span>)</span>
+            <input type="text" id="kerf" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="1/8">
+          </label>
+          <label class="field" for="trim"><span>Trim each end</span>
+            <input type="text" id="trim" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="0">
+          </label>
+        </div>
+        <div class="chips" id="chips-kerf" aria-label="Common kerf widths"></div>
+        <p class="hint">Kerf is the blade width lost on every cut. Trim is squared off from each end of every stock length before any part is cut.</p>
+      </div>
+
+      <div class="group">
+        <h2>Pieces needed</h2>
+        <p class="note" id="example-note">Example scrap and cuts are loaded. Change them, or clear them to start your own lists.</p>
+        <div class="rows-head"><span>Length (<span class="unit-l">in</span>)</span><span>Qty</span><span></span></div>
+        <div id="rows"></div>
+        <div class="actions">
+          <button type="button" class="btn primary" id="add">Add piece</button>
+          <button type="button" class="btn quiet" id="clear">Clear pieces</button>
+          <button type="button" class="btn quiet" id="clear-stock">Clear stock</button>
+        </div>
+        <p class="hint" id="fmt-hint">Type lengths as 36, 36.5, 36 1/2, or 3' 6 1/2.</p>
+      </div>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="h-res">
+      <div class="res-h">
+        <h2 id="h-res">Cut plan</h2>
+        <div class="res-tools">
+          <div class="toggle" id="modewrap" role="group" aria-label="Number format">
+            <button type="button" id="m-frac" aria-pressed="true">1/2</button>
+            <button type="button" id="m-dec" aria-pressed="false">0.5</button>
+          </div>
+          <button type="button" class="btn" id="copy">Copy list</button>
+        </div>
+      </div>
+      <div id="res-body" aria-live="polite"></div>
+      <textarea id="copy-fallback" class="fallback" readonly hidden aria-label="Cut list text"></textarea>
+    </section>
+  </div>
+</main>
+
+<div class="dock" id="dock" hidden>
+  <div class="dock-t" id="dock-t"></div>
+  <button type="button" class="btn primary" id="dock-go">View cuts</button>
+</div>
+
+<script>
+//<solver>
+function parseNum(tok) {
+  if (/^\d+\/\d+$/.test(tok)) {
+    var p = tok.split('/');
+    var a = Number(p[0]), b = Number(p[1]);
+    return b ? a / b : NaN;
+  }
+  if (/^\d*\.?\d+$/.test(tok) || /^\d+\.$/.test(tok)) return parseFloat(tok);
+  return NaN;
+}
+function parseLen(str, unit) {
+  if (str == null) return NaN;
+  var s = String(str).trim().toLowerCase().replace(',', '.');
+  if (!s) return NaN;
+  var feet = 0, hadFeet = false;
+  if (unit === 'in') {
+    var m = s.match(/^(\d+(?:\.\d+)?)\s*(?:'|ft|feet|foot)\s*-?\s*(.*)$/);
+    if (m) { feet = parseFloat(m[1]); s = m[2]; hadFeet = true; }
+  }
+  s = s.replace(/["”″]|\binches\b|\binch\b|\bin\b|\bmm\b/g, ' ').trim();
+  var total = 0;
+  if (s) {
+    var toks = s.split(/[\s-]+/).filter(Boolean);
+    for (var i = 0; i < toks.length; i++) {
+      var v = parseNum(toks[i]);
+      if (isNaN(v)) return NaN;
+      total += v;
+    }
+  } else if (!hadFeet) {
+    return NaN;
+  }
+  return unit === 'in' ? feet * 12 + total : total;
+}
+function trimZ(s) {
+  return s.indexOf('.') >= 0 ? s.replace(/0+$/, '').replace(/\.$/, '') : s;
+}
+function fmt(v, unit, mode) {
+  if (unit === 'mm') return trimZ(v.toFixed(2));
+  if (mode === 'dec') return trimZ(v.toFixed(3));
+  var whole = Math.floor(v + 1e-9);
+  var frac = v - whole;
+  if (frac < 0.0006) return String(whole);
+  if (frac > 0.9994) return String(whole + 1);
+  var dens = [2, 4, 8, 16, 32, 64];
+  for (var d = 0; d < dens.length; d++) {
+    var den = dens[d];
+    var n = Math.round(frac * den);
+    if (n > 0 && n < den && Math.abs(frac - n / den) < 0.0006) {
+      return (whole ? whole + ' ' : '') + n + '/' + den;
+    }
+  }
+  return trimZ(v.toFixed(3));
+}
+
+/*
+  w[i]   = piece length + kerf
+  scrap  = [{cap}] one entry per physical bar on hand (cap = usable length + kerf)
+  buy    = [{cap}] lengths that can be bought in any quantity
+  Goal, in order: place every piece, buy as little as possible, use as little total stock
+  length as possible, then keep the leftovers in as few big offcuts as possible.
+*/
+function solveMulti(w, scrapIn, buyIn, budget) {
+  var n = w.length, i;
+  var scrap = scrapIn.slice().sort(function (a, b) { return a.cap - b.cap; });
+  var buy = buyIn.slice().sort(function (a, b) { return a.cap - b.cap; });
+  var maxCap = 0;
+  for (i = 0; i < scrap.length; i++) if (scrap[i].cap > maxCap) maxCap = scrap[i].cap;
+  for (i = 0; i < buy.length; i++) if (buy[i].cap > maxCap) maxCap = buy[i].cap;
+  var tooLong = [], active = [];
+  for (i = 0; i < n; i++) { if (w[i] > maxCap) tooLong.push(i); else active.push(i); }
+  if (!active.length) return { bins: [], tooLong: tooLong, short: [], lb: 0 };
+
+  // A lower bound on stock count exists when every stock has the same capacity.
+  var capSet = {}, capCount = 0, onlyCap = 0;
+  scrap.concat(buy).forEach(function (s) { if (!capSet[s.cap]) { capSet[s.cap] = 1; capCount++; onlyCap = s.cap; } });
+  var lb = 0;
+  if (capCount === 1) {
+    var sum = 0, big = 0;
+    active.forEach(function (ix) { sum += w[ix]; if (w[ix] * 2 > onlyCap) big++; });
+    lb = Math.max(Math.ceil(sum / onlyCap), big);
+  }
+
+  var base = active.slice().sort(function (a, b) { return w[b] - w[a]; });
+
+  function pack(order, pol) {
+    var bins = [], usedS = new Uint8Array(scrap.length), un = [];
+    for (var k = 0; k < order.length; k++) {
+      var it = order[k], wi = w[it], tgt = -1, bestRem = Infinity, b, s, rem;
+      for (b = 0; b < bins.length; b++) {
+        rem = bins[b].cap - bins[b].load - wi;
+        if (rem >= 0) {
+          if (pol.first) { tgt = b; break; }
+          if (rem < bestRem) { bestRem = rem; tgt = b; }
+        }
+      }
+      if (tgt >= 0) { bins[tgt].items.push(it); bins[tgt].load += wi; continue; }
+      var pick = -1;
+      if (scrap.length) {
+        if (pol.scrap === 0) {
+          for (s = 0; s < scrap.length; s++) if (!usedS[s] && scrap[s].cap >= wi) { pick = s; break; }
+        } else if (pol.scrap === 1) {
+          for (s = scrap.length - 1; s >= 0; s--) if (!usedS[s] && scrap[s].cap >= wi) { pick = s; break; }
+        } else {
+          var cnt = 0;
+          for (s = 0; s < scrap.length; s++) if (!usedS[s] && scrap[s].cap >= wi) { cnt++; if (Math.random() * cnt < 1) pick = s; }
+        }
+      }
+      if (pick >= 0) { usedS[pick] = 1; bins.push({ items: [it], load: wi, cap: scrap[pick].cap, src: 'scrap', sid: pick }); continue; }
+      var fits = [];
+      for (s = 0; s < buy.length; s++) if (buy[s].cap >= wi) fits.push(s);
+      if (fits.length) {
+        var bp = pol.buy === 0 ? fits[0] : pol.buy === 1 ? fits[fits.length - 1] : fits[Math.floor(Math.random() * fits.length)];
+        bins.push({ items: [it], load: wi, cap: buy[bp].cap, src: 'buy', sid: bp });
+        continue;
+      }
+      un.push(it);
+    }
+    return { bins: bins, un: un };
+  }
+
+  // Try to empty a bar by moving its pieces into room left in the other bars.
+  function squeeze(bins) {
+    var changed = true, guard = 0;
+    while (changed && guard++ < 50) {
+      changed = false;
+      var idx = [], a;
+      for (a = 0; a < bins.length; a++) idx.push(a);
+      idx.sort(function (x, y) { return bins[x].load - bins[y].load; });
+      for (var q = 0; q < idx.length; q++) {
+        var bi = idx[q], B = bins[bi];
+        var items = B.items.slice().sort(function (x, y) { return w[y] - w[x]; });
+        var extra = {}, moves = [], ok = true;
+        for (var m = 0; m < items.length && ok; m++) {
+          var tgt = -1, bestRem = Infinity;
+          for (var j = 0; j < bins.length; j++) {
+            if (j === bi) continue;
+            var rem = bins[j].cap - bins[j].load - (extra[j] || 0) - w[items[m]];
+            if (rem >= 0 && rem < bestRem) { bestRem = rem; tgt = j; }
+          }
+          if (tgt < 0) ok = false;
+          else { extra[tgt] = (extra[tgt] || 0) + w[items[m]]; moves.push([items[m], tgt]); }
+        }
+        if (ok) {
+          for (var mv = 0; mv < moves.length; mv++) {
+            bins[moves[mv][1]].items.push(moves[mv][0]);
+            bins[moves[mv][1]].load += w[moves[mv][0]];
+          }
+          bins.splice(bi, 1);
+          changed = true;
+          break;
+        }
+      }
+    }
+  }
+
+  // Give every packed bar the smallest stock that holds it, scrap before bought.
+  function reassign(bins) {
+    var usedS = new Uint8Array(scrap.length), res = new Array(bins.length), order = [], q, s;
+    for (q = 0; q < bins.length; q++) order.push(q);
+    order.sort(function (a, b) { return bins[b].load - bins[a].load; });
+    for (q = 0; q < order.length; q++) {
+      var B = bins[order[q]], pick = -1;
+      for (s = 0; s < scrap.length; s++) if (!usedS[s] && scrap[s].cap >= B.load) { pick = s; break; }
+      if (pick >= 0) { usedS[pick] = 1; res[order[q]] = { cap: scrap[pick].cap, src: 'scrap', sid: pick }; continue; }
+      var bp = -1;
+      for (s = 0; s < buy.length; s++) if (buy[s].cap >= B.load) { bp = s; break; }
+      if (bp < 0) return false;
+      res[order[q]] = { cap: buy[bp].cap, src: 'buy', sid: bp };
+    }
+    for (q = 0; q < bins.length; q++) { bins[q].cap = res[q].cap; bins[q].src = res[q].src; bins[q].sid = res[q].sid; }
+    return true;
+  }
+
+  function score(bins, un) {
+    var unLen = 0, buyLen = 0, used = 0, ssq = 0, k;
+    for (k = 0; k < un.length; k++) unLen += w[un[k]];
+    for (k = 0; k < bins.length; k++) {
+      var b = bins[k], r = b.cap - b.load;
+      if (b.src === 'buy') buyLen += b.cap;
+      used += b.cap;
+      ssq += r * r;
+    }
+    return [unLen, buyLen, used, -ssq];
+  }
+  function better(a, b) {
+    for (var k = 0; k < 4; k++) if (a[k] !== b[k]) return a[k] < b[k];
+    return false;
+  }
+
+  var best = null, bestSc = null;
+  function consider(pk) {
+    if (pk.bins.length <= 80) squeeze(pk.bins);
+    reassign(pk.bins);
+    var sc = score(pk.bins, pk.un);
+    if (!best || better(sc, bestSc)) { best = pk; bestSc = sc; }
+  }
+
+  var f, sp, bp2;
+  for (f = 0; f < 2; f++) for (sp = 0; sp < 2; sp++) for (bp2 = 0; bp2 < 2; bp2++) {
+    consider(pack(base, { first: f === 1, scrap: sp, buy: bp2 }));
+  }
+  var t0 = Date.now(), keys = new Array(n);
+  for (var it = 0; it < 6000; it++) {
+    if (lb && best.un.length === 0 && best.bins.length === lb && it >= 400) break;
+    if ((it & 15) === 0 && Date.now() - t0 > budget) break;
+    var amp = 0.02 + Math.random() * 0.5;
+    for (i = 0; i < base.length; i++) keys[base[i]] = w[base[i]] * (1 + (Math.random() - 0.5) * amp);
+    var order = base.slice().sort(function (a, b) { return keys[b] - keys[a]; });
+    consider(pack(order, { first: Math.random() < 0.4, scrap: Math.floor(Math.random() * 3), buy: Math.floor(Math.random() * 3) }));
+  }
+  return { bins: best.bins, tooLong: tooLong, short: best.un, lb: lb };
+}
+//</solver>
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'stock-cut-optimizer:v1';
+  var SCALE = { in: 1000, mm: 100 };
+  var BARPX = 320;
+  var MAX_PIECES = 3000;
+  var CHIPS = {
+    in: {
+      stock: [['8 ft', '96'], ['10 ft', '120'], ['12 ft', '144'], ['20 ft', '240']],
+      kerf: [['1/16', '1/16'], ['3/32', '3/32'], ['1/8', '1/8'], ['3/16', '3/16']]
+    },
+    mm: {
+      stock: [['2.4 m', '2400'], ['3 m', '3000'], ['6 m', '6000'], ['12 m', '12000']],
+      kerf: [['1.5', '1.5'], ['2.5', '2.5'], ['3', '3'], ['5', '5']]
+    }
+  };
+  var EX_PIECES = [['47 1/2', '4'], ['32', '6'], ['18 3/4', '8'], ['12', '10'], ['7 5/8', '12']];
+  var EX_SCRAP = [['105', '1'], ['62', '1'], ['38 3/4', '2'], ['27', '3']];
+
+  var S = { unit: 'in', mode: 'frac', kerf: '1/8', trim: '0', example: true, stocks: [], rows: [] };
+  var uid = 1, TEXT = '', DONE = new Set(), timer = null;
+
+  function $(s) { return document.querySelector(s); }
+  function newRow(len, qty) { return { id: uid++, len: len || '', qty: qty == null ? '1' : qty }; }
+  function newStock(len, qty, inf) { return { id: uid++, len: len || '', qty: qty == null ? '1' : qty, inf: !!inf }; }
+  function initExample() {
+    S.unit = 'in'; S.mode = 'frac'; S.kerf = '1/8'; S.trim = '0'; S.example = true;
+    S.stocks = EX_SCRAP.map(function (r) { return newStock(r[0], r[1], false); });
+    S.stocks.push(newStock('240', '', true));
+    S.rows = EX_PIECES.map(function (r) { return newRow(r[0], r[1]); });
+  }
+  function load() {
+    try {
+      var j = JSON.parse(localStorage.getItem(KEY));
+      if (j && Array.isArray(j.rows) && (j.unit === 'in' || j.unit === 'mm') && !j.example) {
+        S.unit = j.unit;
+        S.mode = j.mode === 'dec' ? 'dec' : 'frac';
+        S.kerf = String(j.kerf == null ? '' : j.kerf);
+        S.trim = String(j.trim == null ? '' : j.trim);
+        S.example = false;
+        if (Array.isArray(j.stocks)) {
+          S.stocks = j.stocks.map(function (r) { return newStock(String(r.len || ''), String(r.qty == null ? '' : r.qty), !!r.inf); });
+        } else {
+          // saved by the single-stock version: that length becomes bought stock
+          S.stocks = [newStock(String(j.stock == null ? '' : j.stock), '', true)];
+        }
+        if (!S.stocks.length) S.stocks.push(newStock('', '1', false));
+        S.rows = j.rows.map(function (r) { return newRow(String(r.len || ''), String(r.qty == null ? '' : r.qty)); });
+        if (!S.rows.length) S.rows.push(newRow('', '1'));
+        return;
+      }
+    } catch (e) { /* storage unavailable */ }
+    initExample();
+  }
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({
+        unit: S.unit, mode: S.mode, kerf: S.kerf, trim: S.trim, example: S.example,
+        stocks: S.stocks.map(function (r) { return { len: r.len, qty: r.qty, inf: r.inf }; }),
+        rows: S.rows.map(function (r) { return { len: r.len, qty: r.qty }; })
+      }));
+    } catch (e) { /* storage unavailable */ }
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = setTimeout(function () { renderResults(); save(); }, 140);
+  }
+  function touch() {
+    if (S.example) { S.example = false; $('#example-note').hidden = true; }
+    schedule();
+  }
+  function f(v) { return fmt(v, S.unit, S.mode); }
+
+  /* ---------- inputs ---------- */
+  function validQty(t) { return /^\d+$/.test(t) && parseInt(t, 10) >= 1; }
+  function markValid(row, isStock, rec) {
+    var l = row.querySelector('.len'), q = row.querySelector('.qty');
+    var lt = l.value.trim(), qt = q.value.trim();
+    l.classList.toggle('bad', lt !== '' && !(parseLen(lt, S.unit) > 0));
+    q.classList.toggle('bad', !(isStock && rec.inf) && qt !== '' && !validQty(qt));
+  }
+  function applyInf(row, rec) {
+    var q = row.querySelector('.qty'), b = row.querySelector('.inf');
+    q.disabled = rec.inf;
+    q.placeholder = rec.inf ? '∞' : '1';
+    q.value = rec.inf ? '' : rec.qty;
+    b.setAttribute('aria-pressed', String(rec.inf));
+  }
+  function inputMode() { return S.unit === 'in' ? 'text' : 'decimal'; }
+  function renderStocks(focusLast) {
+    var box = $('#stocks');
+    box.innerHTML = '';
+    var ph = S.unit === 'in' ? 'e.g. 96' : 'e.g. 2400';
+    S.stocks.forEach(function (r) {
+      var d = document.createElement('div');
+      d.className = 'row srow';
+      d.dataset.id = r.id;
+      d.innerHTML =
+        '<input class="len" id="slen-' + r.id + '" type="text" inputmode="' + inputMode() + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Stock length" placeholder="' + ph + '">' +
+        '<input class="qty" id="sqty-' + r.id + '" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="How many you have" placeholder="1">' +
+        '<button type="button" class="inf" aria-label="Unlimited, stock you can buy" title="Unlimited: stock you can buy" aria-pressed="false">∞</button>' +
+        '<button type="button" class="del" aria-label="Remove stock length">&times;</button>';
+      d.querySelector('.len').value = r.len;
+      applyInf(d, r);
+      markValid(d, true, r);
+      box.appendChild(d);
+    });
+    if (focusLast) {
+      var l = box.querySelector('.row:last-child .len');
+      if (l) l.focus();
+    }
+  }
+  function renderRows(focusLast) {
+    var box = $('#rows');
+    box.innerHTML = '';
+    var ph = S.unit === 'in' ? 'e.g. 36 1/2' : 'e.g. 914.4';
+    S.rows.forEach(function (r) {
+      var d = document.createElement('div');
+      d.className = 'row';
+      d.dataset.id = r.id;
+      d.innerHTML =
+        '<input class="len" id="len-' + r.id + '" type="text" inputmode="' + inputMode() + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Piece length" placeholder="' + ph + '">' +
+        '<input class="qty" id="qty-' + r.id + '" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="Quantity" placeholder="1">' +
+        '<button type="button" class="del" aria-label="Remove piece">&times;</button>';
+      d.querySelector('.len').value = r.len;
+      d.querySelector('.qty').value = r.qty;
+      markValid(d, false, r);
+      box.appendChild(d);
+    });
+    if (focusLast) {
+      var l = box.querySelector('.row:last-child .len');
+      if (l) l.focus();
+    }
+  }
+  function renderChips() {
+    $('#chips-stock').innerHTML = CHIPS[S.unit].stock.map(function (c) {
+      return '<button type="button" class="chip" data-field="stock" data-val="' + c[1] + '">+ ' + c[0] + '</button>';
+    }).join('');
+    $('#chips-kerf').innerHTML = CHIPS[S.unit].kerf.map(function (c) {
+      return '<button type="button" class="chip" data-field="kerf" data-val="' + c[1] + '" aria-pressed="false">' + c[0] + '</button>';
+    }).join('');
+    syncChips();
+  }
+  function syncChips() {
+    document.querySelectorAll('.chip[data-field="kerf"]').forEach(function (c) {
+      c.setAttribute('aria-pressed', String(S.kerf.trim() === c.dataset.val));
+    });
+  }
+  function applyUnitUI() {
+    $('#u-in').setAttribute('aria-pressed', String(S.unit === 'in'));
+    $('#u-mm').setAttribute('aria-pressed', String(S.unit === 'mm'));
+    $('#m-frac').setAttribute('aria-pressed', String(S.mode === 'frac'));
+    $('#m-dec').setAttribute('aria-pressed', String(S.mode === 'dec'));
+    $('#modewrap').hidden = S.unit !== 'in';
+    document.querySelectorAll('.unit-l').forEach(function (el) { el.textContent = S.unit; });
+    ['kerf', 'trim'].forEach(function (id) { $('#' + id).setAttribute('inputmode', inputMode()); });
+    $('#kerf').placeholder = S.unit === 'in' ? '1/8' : '3';
+    $('#fmt-hint').textContent = S.unit === 'in'
+      ? "Type lengths as 36, 36.5, 36 1/2, or 3' 6 1/2."
+      : 'Type lengths in millimeters, like 914 or 914.4.';
+    renderChips();
+  }
+  function setUnit(u) {
+    if (u === S.unit) return;
+    var old = S.unit;
+    function conv(str) {
+      var t = String(str).trim();
+      if (!t) return t;
+      var v = parseLen(t, old);
+      if (isNaN(v)) return str;
+      return old === 'in' ? fmt(v * 25.4, 'mm', 'dec') : fmt(v / 25.4, 'in', 'dec');
+    }
+    S.kerf = conv(S.kerf); S.trim = conv(S.trim);
+    S.rows.forEach(function (r) { r.len = conv(r.len); });
+    S.stocks.forEach(function (r) { r.len = conv(r.len); });
+    S.unit = u;
+    $('#kerf').value = S.kerf; $('#trim').value = S.trim;
+    applyUnitUI();
+    renderStocks(false);
+    renderRows(false);
+    renderResults();
+    save();
+  }
+
+  /* ---------- compute ---------- */
+  function compute() {
+    var sc = SCALE[S.unit];
+    var kerfV = S.kerf.trim() === '' ? 0 : parseLen(S.kerf, S.unit);
+    var trimV = S.trim.trim() === '' ? 0 : parseLen(S.trim, S.unit);
+    if (isNaN(kerfV) || kerfV < 0) return { error: 'Kerf is not a valid length. Use a number like 1/8 or 0.125.' };
+    if (isNaN(trimV) || trimV < 0) return { error: 'Trim is not a valid length. Leave it at 0 if you do not square the ends.' };
+    var kerf = Math.round(kerfV * sc), trim = Math.round(trimV * sc), i, k;
+
+    var items = [];
+    for (i = 0; i < S.rows.length; i++) {
+      var row = S.rows[i];
+      if (row.len.trim() === '') continue;
+      var lv = parseLen(row.len, S.unit);
+      if (!(lv > 0)) continue;
+      var qt = row.qty.trim() === '' ? '1' : row.qty.trim();
+      if (!validQty(qt)) continue;
+      var q = parseInt(qt, 10), li = Math.round(lv * sc);
+      if (li < 1) continue;
+      if (items.length + q > MAX_PIECES) return { error: 'That is more than ' + MAX_PIECES + ' pieces. Split the job into smaller lists.' };
+      for (k = 0; k < q; k++) items.push(li);
+    }
+
+    var specs = [], buyMap = new Map(), hasFinite = false, hasInf = false, totalFinite = 0, maxCb = 0, validStock = 0, tooSmall = 0;
+    for (i = 0; i < S.stocks.length; i++) {
+      var st = S.stocks[i];
+      if (st.len.trim() === '') continue;
+      var sv = parseLen(st.len, S.unit);
+      if (!(sv > 0)) continue;
+      var slen = Math.round(sv * sc), cap = slen - 2 * trim;
+      if (cap <= 0) { tooSmall++; continue; }
+      var Cb = cap + kerf;
+      if (st.inf) {
+        hasInf = true; validStock++;
+        if (!buyMap.has(Cb)) buyMap.set(Cb, { cap: Cb });
+        if (Cb > maxCb) maxCb = Cb;
+      } else {
+        var sq = st.qty.trim() === '' ? '1' : st.qty.trim();
+        if (!validQty(sq)) continue;
+        var cnt = parseInt(sq, 10);
+        hasFinite = true; validStock++; totalFinite += cnt;
+        specs.push({ cap: Cb, n: cnt });
+        if (Cb > maxCb) maxCb = Cb;
+      }
+    }
+    if (!validStock) {
+      return { error: tooSmall ? 'Trim on both ends uses up the whole stock length.' : 'Add a stock length to cut from.' };
+    }
+    if (!items.length) return { error: 'Add the lengths you need to cut and their quantities.' };
+
+    var scrap = [];
+    specs.forEach(function (sp) {
+      var c = Math.min(sp.n, items.length);
+      for (var z = 0; z < c; z++) scrap.push({ cap: sp.cap });
+    });
+    var buy = Array.from(buyMap.values());
+    var w = items.map(function (l) { return l + kerf; });
+    var res = solveMulti(w, scrap, buy, 280);
+    return {
+      kerf: kerf, trim: trim, sc: sc, items: items, res: res,
+      hasFinite: hasFinite, hasInf: hasInf, totalFinite: totalFinite, maxCb: maxCb
+    };
+  }
+
+  /* ---------- results ---------- */
+  function labelFits(len, stock, txt) { return (len / stock) * BARPX >= txt.length * 6.4 + 8; }
+  function countList(lens, sc) {
+    var m = new Map();
+    lens.forEach(function (L) { m.set(L, (m.get(L) || 0) + 1); });
+    return Array.from(m.keys()).sort(function (a, b) { return b - a; }).map(function (L) { return m.get(L) + '× ' + f(L / sc); }).join(', ');
+  }
+
+  function cardHTML(g, hues, r, mixed) {
+    var sc = r.sc, kerf = r.kerf, trim = r.trim, stock = g.sl;
+    var segs = '';
+    if (trim > 0) segs += '<span class="cell trim" style="flex:' + trim + ' 1 0"></span>';
+    g.lens.forEach(function (L, i) {
+      var lab = f(L / sc);
+      segs += '<span class="cell piece" style="flex:' + L + ' 1 0;--h:' + hues.get(L) + '">' + (labelFits(L, stock, lab) ? lab : '') + '</span>';
+      var last = i === g.lens.length - 1;
+      if (kerf > 0 && (!last || g.rem > 0)) segs += '<span class="kerf"></span>';
+    });
+    if (g.off > 0) {
+      var ol = f(g.off / sc);
+      segs += '<span class="cell off" style="flex:' + g.off + ' 1 0">' + (labelFits(g.off, stock, ol) ? '<em>' + ol + '</em>' : '') + '</span>';
+    }
+    if (trim > 0) segs += '<span class="cell trim" style="flex:' + trim + ' 1 0"></span>';
+
+    var runs = [], j = 0;
+    while (j < g.lens.length) {
+      var L2 = g.lens[j], c = 0;
+      while (j < g.lens.length && g.lens[j] === L2) { c++; j++; }
+      runs.push('<span class="cut" style="--h:' + hues.get(L2) + '">' + c + '× ' + f(L2 / sc) + '</span>');
+    }
+    if (g.off > 0) runs.push('<span class="cut o">offcut ' + f(g.off / sc) + '</span>');
+
+    var title = f(stock / sc) + ' ' + S.unit;
+    var aria = title + (mixed ? (g.src === 'buy' ? ' new stock' : ' scrap') : '') + ': ' + g.lens.map(function (L) { return f(L / sc); }).join(', ') + (g.off > 0 ? ', offcut ' + f(g.off / sc) : '');
+    return '<article class="stock' + (DONE.has(g.key) ? ' is-done' : '') + '">' +
+      '<div class="stock-h"><h3>' + title +
+      (mixed ? '<span class="tag ' + g.src + '">' + (g.src === 'buy' ? 'buy' : 'scrap') + '</span>' : '') +
+      (g.count > 1 ? '<span class="x">×' + g.count + ' the same</span>' : '') + '</h3>' +
+      '<label class="done"><input type="checkbox" data-key="' + g.key + '"' + (DONE.has(g.key) ? ' checked' : '') + '> Cut</label></div>' +
+      '<div class="bar" role="img" aria-label="' + aria + '">' + segs + '</div>' +
+      '<div class="cuts">' + runs.join('') + '</div></article>';
+  }
+
+  function tile(k, v, s) {
+    return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + s + '</div></div>';
+  }
+
+  function renderResults() {
+    var body = $('#res-body'), dock = $('#dock');
+    var r = compute();
+    if (r.error) {
+      body.innerHTML = '<div class="empty">' + r.error + '</div>';
+      dock.hidden = true; TEXT = '';
+      return;
+    }
+    var sc = r.sc, items = r.items, kerf = r.kerf, trim = r.trim, res = r.res, unit = S.unit;
+    var mixed = r.hasFinite && r.hasInf;
+
+    var warn = '';
+    if (res.tooLong.length) {
+      warn += '<div class="warn">Longer than any stock you entered (longest usable is ' + f((r.maxCb - kerf) / sc) + ' ' + unit + '): ' +
+        countList(res.tooLong.map(function (ix) { return items[ix]; }), sc) + '.</div>';
+    }
+    if (res.short.length) {
+      warn += '<div class="warn">Not enough stock for: ' + countList(res.short.map(function (ix) { return items[ix]; }), sc) + '. ' +
+        (r.hasInf ? '' : 'Add more stock, or tap ∞ on a length you can buy.') + '</div>';
+    }
+
+    var bins = res.bins, N = bins.length;
+    if (!N) {
+      body.innerHTML = warn + '<div class="empty">No pieces could be placed.</div>';
+      dock.hidden = true; TEXT = '';
+      return;
+    }
+
+    var map = new Map(), sumParts = 0, sumOff = 0, used = 0, buyCount = 0, scrapUsed = 0, buyLens = new Map();
+    bins.forEach(function (b) {
+      var lens = b.items.map(function (ix) { return items[ix]; }).sort(function (a, c) { return c - a; });
+      var rem = b.cap - b.load, off = Math.max(0, rem - kerf), sl = b.cap - kerf + 2 * trim;
+      lens.forEach(function (L) { sumParts += L; });
+      sumOff += off; used += sl;
+      if (b.src === 'buy') { buyCount++; buyLens.set(sl, (buyLens.get(sl) || 0) + 1); } else scrapUsed++;
+      var key = b.src + '|' + sl + '|' + lens.join('_');
+      if (!map.has(key)) map.set(key, { key: key, src: b.src, sl: sl, lens: lens, off: off, rem: rem, load: b.load, count: 0 });
+      map.get(key).count++;
+    });
+    var groups = Array.from(map.values()).sort(function (a, b) {
+      return (a.src === b.src ? 0 : a.src === 'scrap' ? -1 : 1) || b.sl - a.sl || b.count - a.count || b.load - a.load;
+    });
+
+    var uniq = Array.from(new Set(items)).sort(function (a, b) { return b - a; });
+    var hues = new Map();
+    uniq.forEach(function (L, i) { hues.set(L, (i * 47 + 205) % 360); });
+
+    var yieldPct = (sumParts / used) * 100;
+    var waste = used - sumParts;
+    var lossKT = waste - sumOff;
+    var buyList = Array.from(buyLens.keys()).sort(function (a, b) { return b - a; }).map(function (L) {
+      return buyLens.get(L) + '× ' + f(L / sc) + ' ' + unit;
+    }).join(', ');
+    var placed = items.length - res.tooLong.length - res.short.length;
+    var proven = res.lb && !res.short.length && N === res.lb;
+
+    var tiles = [];
+    if (r.hasInf) tiles.push(tile('To buy', buyCount, buyCount ? buyList : 'scrap covers it'));
+    else tiles.push(tile('Stock used', N, 'of ' + r.totalFinite + ' on hand'));
+    if (mixed) tiles.push(tile('Scrap used', scrapUsed, 'of ' + r.totalFinite + ' on hand'));
+    tiles.push(tile('Yield', yieldPct.toFixed(1) + '<small>%</small>', placed + ' pieces cut'));
+    tiles.push(tile('Left over', f(waste / sc) + ' <small>' + unit + '</small>', 'offcuts ' + f(sumOff / sc) + ' · kerf &amp; trim ' + f(lossKT / sc)));
+
+    var status;
+    if (proven) status = '<b>Fewest possible.</b> No layout can use fewer than ' + N + ' stock length' + (N > 1 ? 's' : '') + '.';
+    else if (mixed) status = '<b>Scrap first.</b> New stock is only used for what the scrap cannot cover.';
+    else status = '<b>Best layout found.</b>';
+
+    var html = warn + '<div class="tiles ' + (tiles.length === 4 ? 't4' : 't3') + '">' + tiles.join('') + '</div><div class="status">' + status + '</div>';
+    groups.forEach(function (g) { html += cardHTML(g, hues, r, mixed); });
+    body.innerHTML = html;
+
+    var lines = ['Stock cut list',
+      'Kerf ' + f(kerf / sc) + ' ' + unit + ' · trim each end ' + f(trim / sc) + ' ' + unit];
+    if (r.hasInf) lines.push('To buy: ' + (buyCount ? buyList : 'nothing'));
+    lines.push('Yield ' + yieldPct.toFixed(1) + '%', '');
+    groups.forEach(function (g) {
+      lines.push(f(g.sl / sc) + ' ' + unit + (mixed ? (g.src === 'buy' ? ' new' : ' scrap') : '') + (g.count > 1 ? ' (x' + g.count + ')' : '') + ': ' +
+        g.lens.map(function (L) { return f(L / sc); }).join(', ') + (g.off > 0 ? '  | offcut ' + f(g.off / sc) : ''));
+    });
+    if (res.short.length || res.tooLong.length) {
+      lines.push('', 'Not cut: ' + countList(res.short.concat(res.tooLong).map(function (ix) { return items[ix]; }), sc));
+    }
+    TEXT = lines.join('\n');
+
+    var main = r.hasInf ? (buyCount ? 'Buy ' + buyList : 'No new stock needed') : N + ' stock piece' + (N > 1 ? 's' : '') + ' used';
+    var sub = yieldPct.toFixed(1) + '% yield' + ((res.short.length || res.tooLong.length) ? ' · ' + (res.short.length + res.tooLong.length) + ' pieces left out' : '');
+    $('#dock-t').innerHTML = main + '<span>' + sub + '</span>';
+    dock.hidden = false;
+  }
+
+  /* ---------- events ---------- */
+  ['kerf', 'trim'].forEach(function (id) {
+    $('#' + id).addEventListener('input', function (e) { S[id] = e.target.value; syncChips(); touch(); });
+  });
+  document.addEventListener('click', function (e) {
+    var c = e.target.closest('.chip');
+    if (!c) return;
+    if (c.dataset.field === 'stock') {
+      S.stocks = S.stocks.filter(function (x, i) { return !(x.len.trim() === '' && i === S.stocks.length - 1 && S.stocks.length > 1); });
+      S.stocks.push(newStock(c.dataset.val, '', true));
+      renderStocks(false); touch();
+      return;
+    }
+    S.kerf = c.dataset.val;
+    $('#kerf').value = c.dataset.val;
+    syncChips(); touch();
+  });
+  $('#u-in').addEventListener('click', function () { setUnit('in'); });
+  $('#u-mm').addEventListener('click', function () { setUnit('mm'); });
+  $('#m-frac').addEventListener('click', function () { S.mode = 'frac'; applyUnitUI(); renderResults(); save(); });
+  $('#m-dec').addEventListener('click', function () { S.mode = 'dec'; applyUnitUI(); renderResults(); save(); });
+
+  function wireList(boxSel, listName, isStock, addFn, blank) {
+    var box = $(boxSel);
+    function rec(row) { return S[listName].find(function (x) { return String(x.id) === row.dataset.id; }); }
+    box.addEventListener('input', function (e) {
+      var row = e.target.closest('.row');
+      if (!row) return;
+      var r = rec(row);
+      if (!r) return;
+      if (e.target.classList.contains('len')) r.len = e.target.value;
+      else if (e.target.classList.contains('qty')) r.qty = e.target.value;
+      markValid(row, isStock, r);
+      touch();
+    });
+    box.addEventListener('click', function (e) {
+      var row = e.target.closest('.row');
+      if (!row) return;
+      var r = rec(row);
+      if (!r) return;
+      if (e.target.closest('.del')) {
+        S[listName] = S[listName].filter(function (x) { return x !== r; });
+        if (!S[listName].length) S[listName].push(blank());
+        (isStock ? renderStocks : renderRows)(false);
+        touch();
+      } else if (isStock && e.target.closest('.inf')) {
+        r.inf = !r.inf;
+        if (!r.inf && r.qty.trim() === '') r.qty = '1';
+        applyInf(row, r);
+        markValid(row, true, r);
+        touch();
+      }
+    });
+    box.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var row = e.target.closest('.row');
+      if (!row) return;
+      e.preventDefault();
+      var q = row.querySelector('.qty');
+      if (e.target.classList.contains('len') && !q.disabled) { q.focus(); return; }
+      var next = row.nextElementSibling;
+      if (next) next.querySelector('.len').focus(); else addFn();
+    });
+  }
+  function addStock() { S.stocks.push(newStock('', '1', false)); renderStocks(true); }
+  function addRow() { S.rows.push(newRow('', '1')); renderRows(true); }
+  wireList('#stocks', 'stocks', true, addStock, function () { return newStock('', '1', false); });
+  wireList('#rows', 'rows', false, addRow, function () { return newRow('', '1'); });
+  $('#add-stock').addEventListener('click', addStock);
+  $('#add').addEventListener('click', addRow);
+  $('#clear').addEventListener('click', function () {
+    S.rows = [newRow('', '1')];
+    renderRows(true);
+    touch();
+  });
+  $('#clear-stock').addEventListener('click', function () {
+    S.stocks = [newStock('', '1', false)];
+    renderStocks(true);
+    touch();
+  });
+
+  $('#res-body').addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.key;
+    if (!k) return;
+    if (e.target.checked) DONE.add(k); else DONE.delete(k);
+    e.target.closest('.stock').classList.toggle('is-done', e.target.checked);
+  });
+  $('#dock-go').addEventListener('click', function () {
+    $('#results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  $('#copy').addEventListener('click', function () {
+    var btn = $('#copy'), fb = $('#copy-fallback');
+    if (!TEXT) return;
+    function fallback() {
+      fb.hidden = false; fb.value = TEXT; fb.focus(); fb.select();
+    }
+    function ok() {
+      fb.hidden = true;
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy list'; }, 1600);
+    }
+    try {
+      navigator.clipboard.writeText(TEXT).then(ok, fallback);
+    } catch (err) { fallback(); }
+  });
+
+  /* ---------- start ---------- */
+  load();
+  $('#kerf').value = S.kerf;
+  $('#trim').value = S.trim;
+  $('#example-note').hidden = !S.example;
+  applyUnitUI();
+  renderStocks(false);
+  renderRows(false);
+  renderResults();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+</body>
+</html>
